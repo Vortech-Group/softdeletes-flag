@@ -3,34 +3,44 @@
 Designed for high-load applications and optimizes queries with soft deletes by utilizing a boolean field for indexing, than using unique timestamps.
 ## Installation
 
-You can install the package via composer:
+You can install the package by adding the following repository:
+```php
+"repositories": {
+    "softdeletes-flag": {
+        "type": "github",
+        "url": "https://github.com/Vortech-Group/softdeletes-flag",
+        "options": {
+            "symlink": true
+        }
+    }
+},
+```
 
+Next you can install it via composer:
 ```bash
-composer require vortech/softdeletes-flag
+composer require vortech/softdeletes-flag @dev
 ```
 
 ## Usage
+
+Add the soft delete column to your migration up method:
 ```php
-Add "$table->softDeletesFlag()" to your migration.
+$table->softDeletesFlag()
 ```
 
+Add the trait to your model:
 ```php
-Add "use SoftDeletesFlag" trait to your model.
+use SoftDeletesFlag
 ```
 
-### Testing
-
-```bash
-composer test
+If you want drop the soft delete column add this line to the down method of your migration:
+```php
+$table->dropSoftDeletesFlag()
 ```
 
 ### Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
-
-## Contributing
-
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 ### Security
 
@@ -38,7 +48,7 @@ If you discover any security related issues, please email mate@vortech.hu instea
 
 ## Credits
 
--   [Mate Papp](https://github.com/vortech)
+- Mate Papp, Developer @ Vortech
 
 ## License
 
