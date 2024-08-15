@@ -12,7 +12,11 @@ class SoftDeletesFlagScope implements Scope
 
     public function apply(Builder $builder, Model $model): void
     {
-        $builder->where($model->getQualifiedIsDeletedColumn(), false);
+        $builder->where(
+            column: $model->getQualifiedIsDeletedColumn(),
+            operator: '=',
+            value: false
+        );
     }
 
     public function extend(Builder $builder): void
@@ -44,7 +48,9 @@ class SoftDeletesFlagScope implements Scope
         $builder->macro('restore', function (Builder $builder) {
             $builder->withTrashed();
 
-            return $builder->update([$builder->getModel()->getIsDeletedColumn() => null]);
+            return $builder->update([
+                $builder->getModel()->getIsDeletedColumn() => false
+            ]);
         });
     }
 
@@ -86,8 +92,10 @@ class SoftDeletesFlagScope implements Scope
         $builder->macro('withoutTrashed', function (Builder $builder) {
             $model = $builder->getModel();
 
-            $builder->withoutGlobalScope($this)->whereNull(
-                $model->getQualifiedIsDeletedColumn()
+            $builder->withoutGlobalScope($this)->where(
+                column: $model->getQualifiedIsDeletedColumn(),
+                operator: '=',
+                value: false
             );
 
             return $builder;
@@ -99,8 +107,10 @@ class SoftDeletesFlagScope implements Scope
         $builder->macro('onlyTrashed', function (Builder $builder) {
             $model = $builder->getModel();
 
-            $builder->withoutGlobalScope($this)->whereNotNull(
-                $model->getQualifiedIsDeletedColumn()
+            $builder->withoutGlobalScope($this)->where(
+                column: $model->getQualifiedIsDeletedColumn(),
+                operator: '=',
+                value: true
             );
 
             return $builder;
