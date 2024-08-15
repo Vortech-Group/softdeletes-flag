@@ -1,0 +1,53 @@
+{
+    "name": "vortech/softdeletes-flag",
+    "description": "Designed for high-load applications and optimizes queries with soft deletes by utilizing a boolean field for indexing, than using unique timestamps.",
+    "keywords": [
+        "vortech",
+        "softdeletes-flag"
+    ],
+    "homepage": "https://github.com/vortech/softdeletes-flag",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Mate Papp",
+            "email": "mate@vortech.hu",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=8.2"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^6.0",
+        "phpunit/phpunit": "^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Vortech\\SoftDeletesFlag\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Vortech\\SoftDeletesFlag\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Vortech\\SoftDeletesFlag\\Providers\\SoftDeletesFlagServiceProvider"
+            ],
+            "aliases": {
+                "SoftdeletesFlag": "Vortech\\SoftDeletesFlag\\Facades\\SoftDeletesFlagFacade"
+            }
+        }
+    }
+}
