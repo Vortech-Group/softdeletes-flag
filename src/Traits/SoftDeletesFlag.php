@@ -2,7 +2,7 @@
 
 namespace Vortech\SoftDeletesFlag\Traits;
 
-use App\Scopes\SoftDeletesFlagScope;
+use Vortech\SoftDeletesFlag\Scopes\SoftDeletesFlagScope;
 
 trait SoftDeletesFlag
 {
