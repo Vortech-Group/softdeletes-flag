@@ -18,7 +18,7 @@ You can install the package by adding the following repository:
 
 Next you can install it via composer:
 ```bash
-composer require vortech/softdeletes-flag @dev
+composer require vortech/softdeletes-flag
 ```
 
 ## Usage
