@@ -50,5 +50,12 @@
                 "SoftdeletesFlag": "Vortech\\SoftDeletesFlag\\Facades\\SoftDeletesFlagFacade"
             }
         }
-    }
+    },
+    "repositories": [{
+        "packagist.org": false
+    },{
+        "name": "private-packagist",
+        "type": "composer",
+        "url": "https://repo.packagist.com/vortech/"
+    }]
 }
