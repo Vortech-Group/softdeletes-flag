@@ -1,6 +1,7 @@
 # SoftDeletesFlag
 
 Designed for high-load applications and optimizes queries with soft deletes by utilizing a boolean field, instead of using unique timestamps.
+
 ## Installation
 
 You can install the package by adding the following repository:

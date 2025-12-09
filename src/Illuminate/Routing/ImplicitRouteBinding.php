@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Vortech\SoftDeletesFlag\Illuminate\Routing;
 
 use Illuminate\Contracts\Routing\UrlRoutable;
@@ -9,16 +11,16 @@ use Illuminate\Support\Str;
 use Vortech\SoftDeletesFlag\Illuminate\Routing\Exceptions\BackedEnumCaseNotFoundException;
 use Vortech\SoftDeletesFlag\Traits\SoftDeletesFlag;
 
-class ImplicitRouteBinding
+final readonly class ImplicitRouteBinding
 {
     public static function resolveForRoute($container, $route): void
     {
         $parameters = $route->parameters();
 
-        $route = static::resolveBackedEnumsForRoute($route, $parameters);
+        $route = ImplicitRouteBinding::resolveBackedEnumsForRoute($route, $parameters);
 
         foreach ($route->signatureParameters(['subClass' => UrlRoutable::class]) as $parameter) {
-            if (! $parameterName = static::getParameterName($parameter->getName(), $parameters)) {
+            if (! $parameterName = ImplicitRouteBinding::getParameterName($parameter->getName(), $parameters)) {
                 continue;
             }
 
@@ -59,7 +61,7 @@ class ImplicitRouteBinding
     protected static function resolveBackedEnumsForRoute($route, $parameters)
     {
         foreach ($route->signatureParameters(['backedEnum' => true]) as $parameter) {
-            if (! $parameterName = static::getParameterName($parameter->getName(), $parameters)) {
+            if (! $parameterName = ImplicitRouteBinding::getParameterName($parameter->getName(), $parameters)) {
                 continue;
             }
 

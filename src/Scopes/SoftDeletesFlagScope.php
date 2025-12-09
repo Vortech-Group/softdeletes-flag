@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Vortech\SoftDeletesFlag\Scopes;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Scope;
 
-class SoftDeletesFlagScope implements Scope
+final class SoftDeletesFlagScope implements Scope
 {
     protected array $extensions = ['Restore', 'RestoreOrCreate', 'CreateOrRestore', 'WithTrashed', 'WithoutTrashed', 'OnlyTrashed'];
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Vortech\SoftDeletesFlag\Traits;
 
 use Vortech\SoftDeletesFlag\Scopes\SoftDeletesFlagScope;
@@ -136,7 +138,7 @@ trait SoftDeletesFlag
 
     public function getIsDeletedColumn()
     {
-        return defined(static::class.'::IS_DELETED') ? static::IS_DELETED : 'is_deleted';
+        return config('softdeletes-flag.column_name', 'is_deleted');
     }
 
     public function getQualifiedIsDeletedColumn(): string
