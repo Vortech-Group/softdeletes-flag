@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Vortech\SoftDeletesFlag\Illuminate\Routing;
+namespace Vortech\SoftDeletesFlag\Routing;
 
 use Illuminate\Contracts\Routing\UrlRoutable;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Routing\Exceptions\BackedEnumCaseNotFoundException;
 use Illuminate\Support\Reflector;
 use Illuminate\Support\Str;
-use Vortech\SoftDeletesFlag\Illuminate\Routing\Exceptions\BackedEnumCaseNotFoundException;
 use Vortech\SoftDeletesFlag\Traits\SoftDeletesFlag;
 
 final readonly class ImplicitRouteBinding
@@ -34,14 +34,14 @@ final readonly class ImplicitRouteBinding
 
             $parent = $route->parentOfParameter($parameterName);
 
-            $routeBindingMethod = $route->allowsTrashedBindings() && in_array(SoftDeletesFlag::class, class_uses_recursive($instance))
+            $routeBindingMethod = $route->allowsTrashedBindings() && ImplicitRouteBinding::isSoftDeletable($instance)
                 ? 'resolveSoftDeletableRouteBinding'
                 : 'resolveRouteBinding';
 
             if ($parent instanceof UrlRoutable &&
                 ! $route->preventsScopedBindings() &&
                 ($route->enforcesScopedBindings() || array_key_exists($parameterName, $route->bindingFields()))) {
-                $childRouteBindingMethod = $route->allowsTrashedBindings() && in_array(SoftDeletesFlag::class, class_uses_recursive($instance))
+                $childRouteBindingMethod = $route->allowsTrashedBindings() && ImplicitRouteBinding::isSoftDeletable($instance)
                     ? 'resolveSoftDeletableChildRouteBinding'
                     : 'resolveChildRouteBinding';
 
@@ -87,6 +87,12 @@ final readonly class ImplicitRouteBinding
         return $route;
     }
 
+    protected static function isSoftDeletable(object $model): bool
+    {
+        return $model::isSoftDeletable()
+            || in_array(SoftDeletesFlag::class, class_uses_recursive($model), true);
+    }
+
     protected static function getParameterName($name, $parameters): ?string
     {
         if (array_key_exists($name, $parameters)) {
@@ -96,5 +102,7 @@ final readonly class ImplicitRouteBinding
         if (array_key_exists($snakedName = Str::snake($name), $parameters)) {
             return $snakedName;
         }
+
+        return null;
     }
 }

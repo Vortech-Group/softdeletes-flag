@@ -6,3 +6,4 @@
 /.editorconfig      export-ignore
 /CHANGELOG.md       export-ignore
 /CONTRIBUTING.md    export-ignore
+/art                export-ignore

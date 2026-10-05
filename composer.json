@@ -1,9 +1,20 @@
 {
     "name": "vortech/softdeletes-flag",
-    "description": "Designed for high-load applications and optimizes queries with soft deletes by utilizing a boolean field for indexing, than using unique timestamps.",
+    "description": "Drop-in soft deletes for Laravel Eloquent that use an indexed boolean flag instead of a nullable timestamp, for faster queries in high-load applications.",
     "keywords": [
         "vortech",
-        "softdeletes-flag"
+        "softdeletes-flag",
+        "laravel",
+        "eloquent",
+        "soft-delete",
+        "soft-deletes",
+        "boolean",
+        "flag",
+        "index",
+        "performance",
+        "database",
+        "mysql",
+        "unique-index"
     ],
     "homepage": "https://github.com/Vortech-Group/softdeletes-flag",
     "license": "MIT",
@@ -16,12 +27,13 @@
         }
     ],
     "require": {
-        "php": "^8.2",
-        "illuminate/support": "^12.0"
+        "php": "^8.4",
+        "illuminate/support": "^13.0"
     },
     "require-dev": {
-        "orchestra/testbench": "^10.0",
-        "phpunit/phpunit": "^12.0"
+        "orchestra/testbench": "^11.0",
+        "pestphp/pest": "^5.0",
+        "pestphp/pest-plugin-laravel": "^5.0"
     },
     "autoload": {
         "psr-4": {
@@ -34,28 +46,20 @@
         }
     },
     "scripts": {
-        "test": "vendor/bin/phpunit",
-        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
-
+        "test": "vendor/bin/pest",
+        "test-coverage": "vendor/bin/pest --coverage-html coverage"
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
     },
     "extra": {
         "laravel": {
             "providers": [
                 "Vortech\\SoftDeletesFlag\\Providers\\SoftDeletesFlagServiceProvider"
-            ],
-            "aliases": {
-                "SoftdeletesFlag": "Vortech\\SoftDeletesFlag\\Facades\\SoftDeletesFlagFacade"
-            }
+            ]
         }
-    },
-    "repositories": [{
-        "packagist.org": false
-    },{
-        "name": "private-packagist",
-        "type": "composer",
-        "url": "https://repo.packagist.com/vortech/"
-    }]
+    }
 }
